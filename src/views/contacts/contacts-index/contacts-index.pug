@@ -1,0 +1,22 @@
+div
+    v-card
+        v-card-title
+            v-icon(large left) contacts
+            h1 My Contacts
+            v-spacer
+            v-text-field(v-model="search" append-icon="search" label="Search" single-line hide-details)
+            create-modal
+        v-divider
+        v-data-table.elevation-1.text-xs-center(:headers="headers" :items="contacts" :search="search" :loading="loading" disable-initial-sort :rows-per-page-items="itemsPerPage")
+            v-progress-linear(v-slot:progress color="blue" indeterminate)
+            template(v-slot:no-data)
+                v-alert(value="true" color="error" icon="warning") Sorry, nothing to display here :(
+            template(v-slot:items="props")
+                td {{ props.item.first_name }}
+                td {{ props.item.last_name }}
+                td {{ props.item.email }}
+                td 
+                    v-btn(icon small color="primary" fab dark :to="{ name: 'contacts-edit', params: { id: props.item.id } }")
+                        v-icon edit
+                    v-btn(icon small color="red" fab dark @click="deleteContact(props.item.id)")
+                        v-icon delete

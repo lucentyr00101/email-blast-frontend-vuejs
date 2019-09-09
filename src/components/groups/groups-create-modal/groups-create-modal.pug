@@ -1,0 +1,23 @@
+div
+    v-btn(fab dark color="green" @click.stop="dialog = true")
+        v-icon(dark) add
+    
+    v-dialog(v-model="dialog" persistent max-width="600px")
+        v-card
+            v-form(@submit.prevent="addGroup" ref="form" v-model="valid")
+                v-card-title
+                    v-icon(large left) group_add
+                    span.title Add New Group
+                v-divider
+                v-card-text
+                    v-container(grid-list-md)
+                        v-layout(wrap)
+                            v-flex(xs12)
+                                v-text-field(label="Group Name" :rules="requiredRules" v-model="groupData.name")
+                            v-flex(xs12)
+                                v-autocomplete(v-model="groupData.members", :items="items" chips color="blue-grey lighten-2" label="Select contact/s" item-text="full_name" item-value="id" multiple deletable-chips :rules="requiredRules")
+                v-divider
+                v-card-actions
+                    v-spacer
+                    v-btn(color="blue darken-1" @click="closeDialog") Close
+                    v-btn(color="green" type="submit" :disabled="!valid" :loading="loading") Save

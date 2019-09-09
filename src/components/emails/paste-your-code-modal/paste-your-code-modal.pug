@@ -1,0 +1,14 @@
+div(@click="dialog = true")
+    v-card
+        v-card-text.email-create-card-text
+            h6.headline.text-xs-center Paste your Code
+            img.email-create-icon.py-5(src="@/assets/email-create/html-editor-icon.png", alt="Paste your Code")
+    v-dialog(v-model="dialog" max-width="60%")
+        v-card
+            v-card-title.headline Paste your Code
+            v-card-text
+                span Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, perspiciatis libero cumque maxime, itaque deleniti impedit voluptatibus aperiam nisi obcaecati iste eveniet, voluptatem distinctio quos accusantium consectetur sed quibusdam nihil.
+            v-card-actions
+                v-spacer
+                v-btn(color="green" flat @click="dialog = false") Disagree
+                v-btn(color="green darken-1" flat @click="dialog = false") Agree

@@ -1,0 +1,60 @@
+v-app(dark)
+
+    v-navigation-drawer(app v-if="this.$auth.isAuthenticated()" clipped :mini-variant="mini")
+        v-list
+
+            v-list-tile(:to="{ name: 'home' }")
+                v-list-tile-action
+                    v-icon dashboard
+                v-list-tile-content
+                    v-list-tile-title Home
+
+            v-list-tile(:to="{ name: 'users-index' }" v-if="getAuthUser && getAuthUser.user_role === 'Administrator'")
+                v-list-tile-action
+                    v-icon person_pin
+                v-list-tile-content
+                    v-list-tile-title Users
+
+            v-list-tile(:to="{ name: 'contacts-index' }")
+                v-list-tile-action
+                    v-icon contacts
+                v-list-tile-content
+                    v-list-tile-title Contacts
+
+            v-list-tile(:to="{ name: 'groups-index' }")
+                v-list-tile-action
+                    v-icon group
+                v-list-tile-content
+                    v-list-tile-title Groups
+
+            v-list-group(prepend-icon="email" no-action v-if="getAuthUser && getAuthUser.credits >= 1")
+                template(v-slot:activator)
+                    v-list-tile
+                        v-list-tile-content
+                            v-list-tile-title Emails
+                v-list-tile(:to="{ name: 'emails-index' }" exact)
+                    v-list-tile-content
+                        v-list-tile-title View All Emails
+                v-list-tile(:to="{ name: 'emails-create' }")
+                    v-list-tile-content
+                        v-list-tile-title Create New Email
+
+            v-divider
+            v-list-tile(@click="mini = !mini")
+                v-list-tile-action
+                    v-icon {{ mini === true ? 'fast_forward' : 'fast_rewind' }}
+                v-list-tile-content
+                    v-list-tile-title Collapse Menu
+
+    v-toolbar(app v-if="this.$auth.isAuthenticated()" clipped-left)
+        v-toolbar-title Email Blast
+        v-spacer
+        span(v-if="getAuthUser") {{ getAuthUser.name }} ({{ getAuthUser.credits.toLocaleString() }} {{ getAuthUser.credits === 1 ? 'credit' : 'credits' }})
+        v-btn(@click="logout" flat icon)
+            v-icon power_settings_new
+
+    v-content
+        v-container(fluid)
+            router-view
+
+    v-footer(app)

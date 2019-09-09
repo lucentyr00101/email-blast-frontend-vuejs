@@ -1,0 +1,25 @@
+v-container(grid-list-xl).full-height
+    v-layout(row justify-center align-center).full-height
+        v-flex(xs12 sm6)
+            v-card.mx-auto(max-width="500")
+                v-card-title.title.font-weight-regular.justify-space-between
+                    span Login
+                v-alert(:value="alert.value" :type="alert.type")
+                    | {{ alert.message }}
+                v-window(v-model="step")
+                    v-window-item(:value="1")
+                        v-card-text
+                            v-text-field(label="Email" outline v-model="user.email" @keydown.enter.prevent="step++" autofocus prepend-inner-icon="email" :disabled="loginBtnLoading")
+                            span.caption.grey--text.text--darken-1
+                                | Sign in with your email address
+                    v-window-item(:value="2")
+                        v-card-text
+                            v-text-field(label="Password" outline v-model="user.password" @keydown.enter.prevent='submitData()' prepend-inner-icon="lock" :append-icon="show ? 'visibility_off' : 'visibility'" :type="show ? 'text' : 'password'" @click:append="show = !show" :disabled="loginBtnLoading")
+                            span.caption.grey--text.text--darken-1
+                                | Please enter your password
+                v-divider
+                v-card-actions
+                    v-btn(:disabled="step === 1" color="red darken-3" @click="step--") Back
+                    v-spacer
+                    v-btn(:color="step === 2 ? 'success' : 'primary'" @click="step === 1 ? step++ : submitData()" :loading="loginBtnLoading" :disabled="loginBtnLoading")
+                        | {{ step === 2 ? 'Login' : 'Next' }}

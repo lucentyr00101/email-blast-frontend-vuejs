@@ -1,0 +1,23 @@
+div
+    v-container(grid-list-xl)
+        v-layout(row wrap justify-center align-center)
+            v-flex(md8 sm12)
+                v-card(v-if="user")
+                    v-card-title
+                        v-btn(icon fab dark color="warning" small @click="goBack")
+                            v-icon arrow_back
+                    v-divider
+                    v-form(@submit.prevent="saveUser" v-model="valid" ref="form")
+                        v-card-text
+                            v-container(grid-list-md fluid)
+                                v-layout(row wrap)
+                                    v-flex(lg12)
+                                        v-text-field(label="Name" v-model="user.name" :rules="nameRules")
+                                    v-flex(lg6 md12)
+                                        v-text-field(label="Credits" v-model="user.credits" :rules="creditsRules" mask="#################################")
+                                    v-flex(lg6 md12)
+                                        v-text-field(label="Email" v-model="user.email" :rules="emailRules")
+                        v-divider
+                        v-card-actions
+                            v-spacer
+                            v-btn(type="submit" color="success") Save

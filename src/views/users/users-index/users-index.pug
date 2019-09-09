@@ -1,0 +1,24 @@
+div
+    v-card
+        v-card-title
+            v-icon(large left) person_pin
+            h1 Users List
+            v-spacer
+            v-text-field(v-model="search" append-icon="search" label="Search" single-line hide-details)
+            create-modal
+        v-divider
+        v-data-table.elevation-1.text-xs-center(:headers="headers" :items="users" :search="search" v-if="users !== null" :loading="loading" disable-initial-sort :rows-per-page-items="itemsPerPage")
+            v-progress-linear(v-slot:progress color="blue" indeterminate)
+            template(slot="no-data")
+                v-alert(value="true" color="error" icon="warning") Sorry, nothing to display here :(
+            template(v-slot:items="props")
+                td {{ props.item.id }}
+                td {{ props.item.name }}
+                td {{ props.item.email }}
+                td {{ props.item.credits.toLocaleString() }}
+                td {{ props.item.user_role }}
+                td 
+                    v-btn(icon small color="primary" fab dark :to="{ name: 'users-edit', params: { id: props.item.id } }")
+                        v-icon edit
+                    v-btn(icon small color="red" fab dark @click="deleteUser(props.item.id)")
+                        v-icon delete

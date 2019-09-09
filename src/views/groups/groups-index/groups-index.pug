@@ -1,0 +1,22 @@
+v-card
+    v-card-title
+        v-icon(large left) group
+        h1 My Groups
+        v-spacer
+        v-text-field(v-model="search" append-icon="search" label="Search" single-line hide-details)
+        groups-create-modal
+    v-divider
+    v-data-table.elevation-1.text-xs-center(:headers="headers" :loading="loading" :search="search" disable-initial-sort :rows-per-page-items="itemsPerPage" :items="items")
+        v-progress-linear(v-slot:progress color="blue" indeterminate)
+        template(slot="no-data")
+            v-alert(value="true" color="error" icon="warning") Sorry, nothing to display here :(
+        template(v-slot:items="props")
+            td {{ props.item.id }}
+            td {{ props.item.group_name }}
+            td {{ props.item.updated_at }}
+            td {{ props.item.created_at }}
+            td
+                v-btn(icon color="primary" :to="{ name: 'groups-edit', params: { id: props.item.id } }")
+                    v-icon edit
+                v-btn(icon color="red" @click="deleteGroup(props.item.id)")
+                    v-icon delete

@@ -1,0 +1,49 @@
+v-stepper(v-model="el")
+
+    v-stepper-header
+        v-stepper-step(:complete="el > 1" step ="1") Setup
+        v-divider
+        v-stepper-step(:complete="el > 2" step="2") Design
+        v-divider
+        v-stepper-step(:complete="el > 3" step="3") Recipients
+        v-divider
+        v-stepper-step(step="4") Confirmation
+
+    v-stepper-items
+
+        v-stepper-content(step="1")
+            v-card.mb-5
+                v-card-text
+                    form(ref="emailStepOneForm")
+                        v-text-field(label="Campaign Name" :hint="campaignNameHint" :rules="requiredRule" v-model="emailData.campaignName")
+                        v-text-field(label="Subject Line" :hint="subjectLineHint" :rules="requiredRule" v-model="emailData.subjectLine")
+                        v-text-field(label="From Email" :hint="fromEmailHint" readonly v-if="getAuthUser" v-model="emailData.fromEmail")
+                        v-text-field(label="From Name" :hint="fromNameHint" readonly v-if="getAuthUser" v-model="emailData.fromName")
+            v-btn(color="primary" @click="el = 2") Continue
+
+        v-stepper-content(step="2")
+            v-container(fluid grid-list-md)
+                v-layout(row wrap)
+                    v-flex(xs4)
+                        drag-and-drop-editor
+                    v-flex(xs4)
+                        rich-text-editor
+                    v-flex(xs4)
+                        paste-your-code
+            v-btn(color="primary" @click="el = 3") Continue
+            v-btn(flat @click="el = 1") Back
+
+        v-stepper-content(step="3")
+            v-card.mb-5
+                v-card-title
+                    h3 Select your contact list(s)
+                v-card-text
+                    v-select(label="Groups" :items="groups" multiple item-text="group_name" item-value="id" chips deletable-chips v-model="emailData.recipients")
+                    
+            v-btn(color="primary" @click="finalSubmit") Send Now
+            v-btn(flat @click="el = 2") Back
+
+        v-stepper-content(step="4")
+            h1 Emails sent successfully!
+            //- v-btn(color="primary" @click="el = 1") Continue
+            //- v-btn(flat @click="el = 3") Back

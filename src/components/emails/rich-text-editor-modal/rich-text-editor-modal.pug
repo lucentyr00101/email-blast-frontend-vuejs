@@ -1,0 +1,13 @@
+div(@click.stop="dialog = true")
+    v-card
+        v-card-text.email-create-card-text
+            h6.headline.text-xs-center Rich Text Editor
+            img.email-create-icon.py-5(src="@/assets/email-create/plain-text-editor-icon.png" alt="Drag & Drop Editor")
+    v-dialog(v-model="dialog" max-width="60%")
+        v-card
+            v-card-title.headline Rich Text Editor
+            v-card-text(style="background: #fff; color: #000 !important;")
+                vue-editor(v-model="content" @imageAdded="handleImageAdded" :useCustomImageHandler="true")
+            v-card-actions
+                v-spacer
+                v-btn(color="green darken-1" flat @click="sendEmail" :disabled="saveBtnDisabled") {{ saveBtnText }}

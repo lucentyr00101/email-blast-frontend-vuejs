@@ -1,0 +1,21 @@
+div
+    v-container(grid-list-xl)
+        v-layout(row wrap justify-center align-center)
+            v-flex(md8 sm12)
+                v-card(v-if="group")
+                    v-card-title
+                        v-btn(icon fab dark color="warning" small @click="goBack")
+                            v-icon arrow_back
+                    v-divider
+                    v-form(@submit.prevent="saveGroup" v-model="valid" ref="form")
+                        v-card-text
+                            v-container(grid-list-md fluid)
+                                v-layout(row wrap)
+                                    v-flex(lg12)
+                                        v-text-field(label="Group Name" v-model="group.group_name" :rules="requiredRule")
+                                    v-flex(xs12)
+                                        v-autocomplete(v-model="selectedContacts", :items="contacts" chips color="blue-grey lighten-2" label="Select contact/s" item-text="full_name" item-value="id" multiple deletable-chips :rules="requiredRule")
+                        v-divider
+                        v-card-actions
+                            v-spacer
+                            v-btn(type="submit" color="success" :disabled="!valid") Save
