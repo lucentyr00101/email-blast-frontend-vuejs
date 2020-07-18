@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "core-js": "^2.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "register-service-worker": "^1.6.2",
